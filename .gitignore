@@ -1,0 +1,32 @@
+# Entornos y secretos
+.env
+.env.local
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+out/
+dist/
+npm-debug.log*
+
+# Storage real (nunca se sube al repo)
+storage/*
+!storage/.gitkeep
+
+# Docker
+*.log
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
