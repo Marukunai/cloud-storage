@@ -3,6 +3,8 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.core.security import create_access_token
+from app.api.deps import get_current_user
+from app.models.user import User
 from app.schemas.user import UserCreate, UserOut, Token
 from app.services.auth_service import create_user, get_user_by_email, authenticate_user
 
@@ -28,3 +30,8 @@ async def login(
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
     token = create_access_token(subject=user.email)
     return Token(access_token=token)
+
+
+@router.get("/me", response_model=UserOut)
+async def get_me(current_user: User = Depends(get_current_user)):
+    return current_user
