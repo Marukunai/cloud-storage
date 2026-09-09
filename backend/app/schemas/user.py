@@ -8,11 +8,6 @@ class UserCreate(BaseModel):
     full_name: str | None = None
 
 
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-
 class UserOut(BaseModel):
     id: uuid.UUID
     email: EmailStr
