@@ -8,7 +8,7 @@ from app.models.user import User
 from app.models.file import File
 from app.models.folder import Folder
 from app.schemas.file import FileOut, FileRename, FileMove
-from app.services.storage_service import save_file_stream, delete_file_from_disk
+from app.services.storage_service import save_file_stream, delete_stored_file
 
 router = APIRouter(prefix="/api/files", tags=["files"])
 
@@ -101,6 +101,6 @@ async def delete_file(
     current_user: User = Depends(get_current_user),
 ):
     db_file = await _get_owned_file(db, file_id, current_user.id)
-    delete_file_from_disk(db_file.stored_name)
+    await delete_stored_file(db_file.stored_name)
     await db.delete(db_file)
     await db.commit()

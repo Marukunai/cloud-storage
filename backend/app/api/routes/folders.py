@@ -9,7 +9,7 @@ from app.models.user import User
 from app.models.folder import Folder
 from app.models.file import File
 from app.schemas.folder import FolderCreate, FolderRename, FolderMove, FolderOut
-from app.services.storage_service import delete_file_from_disk
+from app.services.storage_service import delete_stored_file
 
 router = APIRouter(prefix="/api/folders", tags=["folders"])
 
@@ -156,7 +156,7 @@ async def delete_folder(
 
     result = await db.execute(select(File.stored_name).where(File.folder_id.in_(subtree_ids)))
     for (stored_name,) in result.all():
-        delete_file_from_disk(stored_name)
+        await delete_stored_file(stored_name)
 
     await db.delete(folder)
     await db.commit()

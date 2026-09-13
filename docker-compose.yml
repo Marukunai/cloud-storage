@@ -25,8 +25,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./storage:/data/storage
     ports:
       - "8000:8000"
 
